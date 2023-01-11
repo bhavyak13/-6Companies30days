@@ -12,6 +12,32 @@
 using namespace __gnu_pbds;
 using namespace std;
 
+
+class Solution {
+public:
+    bool isPossible(vector<int>& a) {
+        map<int,priority_queue<int,vector<int>,greater<int>>>m;
+        for(auto i:a){
+            int cnt=0;
+            if(m.find(i-1)!=m.end()){
+                cnt=m[i-1].top();
+                m[i-1].pop();
+                if(m[i-1].empty())m.erase(i-1);
+            }
+            m[i].push(cnt+1);
+        }
+        for(auto i:m){
+            auto x=i.second;
+            while(!x.empty()){
+                if(x.top()<3)return false;
+                else x.pop();
+            }
+        }
+        return true;
+    }
+};
+// 2nd version 
+/*
 class Solution {
 public:
     bool isPossible(vector<int>& nums) {
@@ -33,3 +59,4 @@ public:
         return true;
     }
 };
+*/
